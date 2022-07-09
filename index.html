@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fetrah - فطرة</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                width: 100%;
+                min-height: 100vh;
+                /* overflow: hidden; */
+                font-family: 'Tajawal', sans-serif;
+                background: linear-gradient(to right, #eb4691 50%, #46c3e3 50%);
+                color: #fff;
+                text-align: center;
+            }
+            /* img {
+                width: 200px;
+            } */
+
+            .hidden {
+                display: none !important;
+            }
+
+            .title {
+                font-size: 50px;
+                margin-bottom: 30px;
+                font-weight: 900;
+            }
+            .paragraph {
+                width: 400px;
+                margin-bottom: 60px;
+            }
+
+            .content .file {
+                display: none;
+            }
+
+            .content label {
+                /* border: 1px solid;
+                border-right-color: #eb4691;
+                border-left-color: #46c3e3;
+                border-top-color: #46c3e3;
+                border-bottom-color: #eb4691; */
+                display: flex;
+                align-items: center;
+                /* justify-content: space-between; */
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: rgb(255, 255, 255);
+                color: black;
+                font-size: 20px;
+                font-weight: 400;
+            }
+
+            .content label video,
+            .btn-download video {
+                margin-left: 10px;
+            }
+
+            .merged-image {
+                border-radius: 1%;
+            }
+
+            .btn-download {
+                margin-top: 30px;
+                background-color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                text-decoration: none;
+                padding: 10px 20px;
+                font-size: 20px;
+                color: black;
+                border-radius: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1 class="title">دعماً لفطرة</h1>
+            <p class="paragraph">
+                ملحوظة احنا مبنحفظش اي بيانات ولا اي صور ولا حتي الصورة الخاصة
+                بيك سواء قبل او بعد التعديل وبمجرد ما بتعمل اعادة تحميل اللينات
+                بتتمسح حتي من عندك
+            </p>
+        </header>
+
+        <main class="content">
+            <input
+                id="file"
+                class="file"
+                type="file"
+                data-image-selector=".image"
+            />
+            <label for="file">
+                اختار صورة
+                <video
+                    width="30"
+                    height="30"
+                    preload="none"
+                    style="
+                        background: transparent
+                            url('https://cdn-icons-png.flaticon.com/512/7741/7741049.png')
+                            50% 50% / fit no-repeat;
+                    "
+                    autoplay="autoplay"
+                    loop="true"
+                    muted="muted"
+                    playsinline=""
+                >
+                    <source
+                        src="https://cdn-icons-mp4.flaticon.com/512/7741/7741049.mp4"
+                        type="video/mp4"
+                    />
+                </video>
+            </label>
+        </main>
+
+        <img class="image hidden" alt="medium image 1" />
+        <img class="avatar hidden" alt="medium image 2" src="/fetrah.png" />
+        <br />
+        <br />
+        <img
+            class="merged-image hidden"
+            width="300"
+            height="300"
+            alt="merged image"
+        />
+        <a download="ادعم_فطرة" class="hidden btn-download">
+            تحميل الصورة
+            <video
+                width="30"
+                height="30"
+                preload="none"
+                style="
+                    background: transparent
+                        url('https://cdn-icons-png.flaticon.com/512/7741/7741071.png')
+                        50% 50% / fit no-repeat;
+                "
+                autoplay="autoplay"
+                loop="true"
+                muted="muted"
+                playsinline=""
+            >
+                <source
+                    src="https://cdn-icons-mp4.flaticon.com/512/7741/7741071.mp4"
+                    type="video/mp4"
+                />
+            </video>
+        </a>
+
+        <canvas id="canvas" class="hidden"></canvas>
+
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            $('.file').on('change', function () {
+                var reader = new FileReader(),
+                    imageSelector = $(this).data('image-selector');
+
+                if (this.files && this.files[0]) {
+                    reader.onload = function (e) {
+                        imageIsLoaded(e, imageSelector);
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            function imageIsLoaded(e, imageSelector) {
+                $(imageSelector).attr('src', e.target.result);
+                merge();
+            }
+
+            function merge() {
+                var canvas = document.getElementById('canvas'),
+                    ctx = canvas.getContext('2d'),
+                    imageObj1 = new Image(),
+                    imageObj2 = new Image();
+
+                imageObj1.src = $('.image').attr('src');
+                imageObj1.onload = function () {
+                    ctx.canvas.width = 540;
+                    ctx.canvas.height = 540;
+                    ctx.globalAlpha = 1;
+                    ctx.drawImage(imageObj1, 0, 0, 540, 540);
+                    imageObj2.src = $('.avatar').attr('src');
+                    imageObj2.onload = function () {
+                        ctx.globalAlpha = 1;
+                        ctx.drawImage(imageObj2, 0, 0, 540, 540);
+                        var img = canvas.toDataURL('image/jpeg');
+                        $('.merged-image')
+                            .attr('src', img)
+                            .removeClass('hidden');
+                        $('a').attr('href', img).removeClass('hidden');
+                    };
+                };
+            }
+        </script>
+    </body>
+</html>

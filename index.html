@@ -20,26 +20,23 @@
         <title>Fetrah | فطرة</title>
         <meta name="title" content="Fetrah | فطرة " />
         <meta name="description" content="إدعم فطرة" />
+        <meta property="og:image" itemprop="image" content="fetraCover.jpg"" />
 
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://metatags.io/" />
+        <meta property="og:url" content="https://fetra.vercel.app" />
         <meta property="og:title" content="Fetrah | فطرة " />
         <meta property="og:description" content="إدعم فطرة" />
-        <meta
-            property="og:image"
-            content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png"
-        />
+        <meta property="og:image" content="fetraCover.jpg" />
 
         <!-- Twitter -->
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://metatags.io/" />
+        <meta property="twitter:url" content="https://fetra.vercel.app" />
         <meta property="twitter:title" content="Fetrah | فطرة " />
         <meta property="twitter:description" content="إدعم فطرة" />
-        <meta
-            property="twitter:image"
-            content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png"
-        />
+        <meta property="twitter:image" content="fetraCover.jpg" />
+
+        <!-- whatsapp -->
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script
@@ -171,49 +168,6 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"
         ></script>
-
-        <script>
-            $('.file').on('change', function () {
-                var reader = new FileReader(),
-                    imageSelector = $(this).data('image-selector');
-
-                if (this.files && this.files[0]) {
-                    reader.onload = function (e) {
-                        imageIsLoaded(e, imageSelector);
-                    };
-                    reader.readAsDataURL(this.files[0]);
-                }
-            });
-
-            function imageIsLoaded(e, imageSelector) {
-                $(imageSelector).attr('src', e.target.result);
-                merge();
-            }
-
-            function merge() {
-                var canvas = document.getElementById('canvas'),
-                    ctx = canvas.getContext('2d'),
-                    imageObj1 = new Image(),
-                    imageObj2 = new Image();
-
-                imageObj1.src = $('.image').attr('src');
-                imageObj1.onload = function () {
-                    ctx.canvas.width = 540;
-                    ctx.canvas.height = 540;
-                    ctx.globalAlpha = 1;
-                    ctx.drawImage(imageObj1, 0, 0, 540, 540);
-                    imageObj2.src = $('.avatar').attr('src');
-                    imageObj2.onload = function () {
-                        ctx.globalAlpha = 1;
-                        ctx.drawImage(imageObj2, 0, 0, 540, 540);
-                        var img = canvas.toDataURL('image/jpeg');
-                        $('.merged-image')
-                            .attr('src', img)
-                            .removeClass('hidden');
-                        $('a').attr('href', img).removeClass('hidden');
-                    };
-                };
-            }
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>

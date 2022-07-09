@@ -77,3 +77,9 @@ body {
     color: black;
     border-radius: 3px;
 }
+
+.github-corner {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
